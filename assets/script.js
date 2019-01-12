@@ -33,7 +33,7 @@ function runTableQuery() {
   function runWaitListQuery() {
 
     // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-    $.get("/api/characters/"+ waitData, function(waitData) {
+    $.get("/api/waitingRes/"+ waitData, function(waitData) {
         console.log(waitData);
     // $.ajax({ url: "/api/waitlist", method: "GET" })
     //   .then(function(waitData) {
@@ -82,4 +82,5 @@ function runTableQuery() {
   // Run Queries!
   // ==========================================
   runTableQuery();
+  runWaitListQuery();
   // runWaitListQuery();

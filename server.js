@@ -4,7 +4,7 @@ var express = require("express");
 var path = require("path");
 
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 
 // Sets up the Express app to handle data parsing
@@ -51,6 +51,7 @@ var currentRes = [{
   }];
 
 
+
 // Routes
 // ===========================================================
 app.get("/", function(req, res) {
@@ -59,11 +60,12 @@ app.get("/", function(req, res) {
 app.get("/tables", function(req, res) {
     res.sendFile(path.join(__dirname, "tables.html"));
 });
-app.get("/reservations", function(req, res) {
+app.get("/reserve", function(req, res) {
   res.sendFile(path.join(__dirname, "reserve.html"));
  });
-// Displays all characters
+// Displays all reservations
 app.get("/api/currentRes", function(req, res) {
+  console.log(currentRes)
     return res.json(currentRes);
   });
 
@@ -72,18 +74,18 @@ app.get("/api/waiting", function(req, res) {
   });
 
 // Create New Reservations - takes in JSON input
-app.post("/api/reservations", function(req, res) {
+app.post("/api/currentRes", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
   var newReservation = req.body;
 
-  // Using a RegEx Pattern to remove spaces from newCharacter
+  // Using a RegEx Pattern to remove spaces from newReservation
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
   newReservation.routeName = newReservation.name.replace(/\s+/g, "").toLowerCase();
 
   console.log(newReservation);
 
-  characters.push(newReservation);
+  currentRes.push(newReservation);
 
   res.json(newReservation);
 });
